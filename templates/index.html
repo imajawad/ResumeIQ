@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ResumeIQ — AI Resume Analyzer</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=2" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body>
+  <!-- ===================== HEADER ===================== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">⚡</span>
+        <span class="logo-text">Resume<span class="logo-accent">IQ</span></span>
+      </div>
+      <p class="tagline">AI-Powered Resume Analyzer · Semantic Skill Matching · Gap Analysis</p>
+    </div>
+  </header>
+
+  <!-- ===================== MAIN ===================== -->
+  <main class="main-container">
+
+    <!-- Upload Form Card -->
+    <section class="card upload-card" id="uploadSection">
+      <div class="card-header">
+        <h2>Analyze Your Resume</h2>
+        <p class="card-subtitle">Upload your resume and paste a job description to get your AI match score</p>
+      </div>
+
+      <div class="upload-grid">
+        <!-- Resume Upload -->
+        <div class="upload-zone" id="uploadZone">
+          <input type="file" id="resumeFile" accept=".pdf,.docx,.png,.jpg,.jpeg" hidden />
+          <div class="upload-icon">📄</div>
+          <p class="upload-label">Drop your resume here</p>
+          <p class="upload-sub">PDF · DOCX · PNG · JPG</p>
+          <button class="btn btn-outline" id="browseBtn" type="button">Browse Files</button>
+          <div class="file-selected" id="fileSelected" hidden>
+            <span id="fileName"></span>
+          </div>
+        </div>
+
+        <!-- Job Description -->
+        <div class="jd-zone">
+          <label for="jobDescription" class="jd-label">Job Description</label>
+          <textarea
+            id="jobDescription"
+            class="jd-textarea"
+            placeholder="Paste the full job description here…&#10;&#10;Example:&#10;We are looking for a Senior Backend Engineer with experience in Python, Flask, AWS, Docker, and Kubernetes. The ideal candidate has strong knowledge of CI/CD pipelines, SQL, and agile development practices."
+            rows="12"
+          ></textarea>
+          <div class="char-count" id="charCount">0 characters</div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn-primary" id="analyzeBtn" type="button" disabled>
+          <span class="btn-icon">🔍</span>
+          Analyze Resume
+        </button>
+        <button class="btn btn-ghost" id="clearBtn" type="button">Clear</button>
+      </div>
+
+      <!-- Error Banner -->
+      <div class="error-banner" id="errorBanner" hidden>
+        <span class="error-icon">⚠️</span>
+        <span id="errorText"></span>
+      </div>
+    </section>
+
+    <!-- Loading State -->
+    <section class="loading-state" id="loadingState" hidden>
+      <div class="loader-ring"></div>
+      <h3 class="loading-title">Analyzing your resume…</h3>
+      <div class="loading-steps" id="loadingSteps">
+        <div class="step active" id="step1">📄 Extracting text</div>
+        <div class="step" id="step2">🧠 Identifying skills</div>
+        <div class="step" id="step3">🔗 Semantic matching</div>
+        <div class="step" id="step4">📊 Building report</div>
+      </div>
+    </section>
+
+    <!-- ===================== RESULTS ===================== -->
+    <section class="results-section" id="resultsSection" hidden>
+
+      <!-- Score Hero -->
+      <div class="score-hero">
+        <div class="score-ring-wrapper">
+          <svg class="score-ring" viewBox="0 0 120 120">
+            <circle cx="60" cy="60" r="52" class="ring-bg" />
+            <circle cx="60" cy="60" r="52" class="ring-fill" id="ringFill" />
+          </svg>
+          <div class="score-value">
+            <span id="scoreNumber">0</span>
+            <span class="score-pct">%</span>
+          </div>
+        </div>
+        <div class="score-meta">
+          <h2 class="score-title">Your Match Score</h2>
+          <p class="score-label" id="scoreLabel">Calculating…</p>
+          <div class="score-bar-row">
+            <span class="bar-label">Matched</span>
+            <div class="bar-outer"><div class="bar-inner matched-bar" id="matchedBar"></div></div>
+            <span class="bar-count" id="matchedCount">0</span>
+          </div>
+          <div class="score-bar-row">
+            <span class="bar-label">Missing</span>
+            <div class="bar-outer"><div class="bar-inner missing-bar" id="missingBar"></div></div>
+            <span class="bar-count" id="missingCount">0</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts Row -->
+      <div class="charts-row">
+        <div class="chart-card">
+          <h3 class="chart-title">Skills Breakdown</h3>
+          <div class="chart-wrapper">
+            <canvas id="skillsBarChart"></canvas>
+          </div>
+        </div>
+        <div class="chart-card">
+          <h3 class="chart-title">Match Distribution</h3>
+          <div class="chart-wrapper chart-wrapper--donut">
+            <canvas id="matchDonutChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skills Grid -->
+      <div class="skills-grid">
+        <div class="skills-panel skills-panel--matched">
+          <h3 class="panel-title">✅ Matched Skills</h3>
+          <div class="skills-tags" id="matchedSkillsTags"></div>
+        </div>
+        <div class="skills-panel skills-panel--missing">
+          <h3 class="panel-title">❌ Missing Skills</h3>
+          <div class="skills-tags" id="missingSkillsTags"></div>
+        </div>
+      </div>
+
+      <!-- ATS Check -->
+      <div class="ats-card" id="atsCard">
+        <div class="ats-header">
+          <h3 class="ats-title">🤖 ATS Compatibility</h3>
+          <div class="ats-score-badge" id="atsScoreBadge">–</div>
+        </div>
+        <div class="ats-flags" id="atsFlags"></div>
+        <div class="ats-suggestions" id="atsSuggestions"></div>
+      </div>
+
+      <!-- Recommendations -->
+      <div class="recs-section" id="recsSection">
+        <h3 class="recs-title">📚 Recommended Learning Resources</h3>
+        <div class="recs-grid" id="recsGrid"></div>
+      </div>
+
+      <!-- Actions -->
+      <div class="reanalyze-row" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <button class="btn btn-outline" id="reanalyzeBtn" type="button">
+          ↩ Analyze Another Resume
+        </button>
+        <button class="btn btn-primary" id="downloadPdfBtn" type="button">
+          📥 Download PDF Report
+        </button>
+      </div>
+
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>ResumeIQ · MSSE Capstone · Built with Flask & Llama 3</p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

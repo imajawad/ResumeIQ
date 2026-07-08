@@ -1,0 +1,31 @@
+# ResumeIQ — Python Dependencies
+# Keep this file up to date whenever a new package is added.
+# Render uses this file to install dependencies on deployment.
+
+# ── Web Framework ──────────────────────────────────────────
+flask==3.0.3
+gunicorn==22.0.0
+
+# ── File Parsing ───────────────────────────────────────────
+pypdf>=4.0.0             # PDF text extraction
+python-docx==1.1.2       # DOCX text extraction
+
+# ── OCR ────────────────────────────────────────────────────
+pytesseract==0.3.13      # Tesseract OCR Python wrapper
+Pillow==10.4.0           # Image handling for OCR
+
+# ── ATS Checking ───────────────────────────────────────────
+pdfplumber==0.11.2       # Table / layout detection in PDFs
+
+# ── AI / NLP ───────────────────────────────────────────────
+openai>=1.14.0                 # xAI Grok API client
+
+# ── Utilities ──────────────────────────────────────────────
+werkzeug==3.0.3          # Flask dependency (secure_filename etc.)
+python-dotenv>=1.0.0     # Environment variable loading
+fpdf2>=2.8.0             # PDF Report generation
+matplotlib>=3.8.0        # Generating graphical charts for PDF
+
+# ── Testing ────────────────────────────────────────────────
+pytest==8.2.2
+pytest-cov==5.0.0        # Coverage reporting in CI

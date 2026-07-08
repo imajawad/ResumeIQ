@@ -1,0 +1,42 @@
+[
+    {
+        "id": "case_1_python_backend",
+        "resume_text": "Experienced backend developer with 5 years of Python, Django, and Flask experience. I have built REST APIs, GraphQL endpoints, and deployed them using Docker and Kubernetes on AWS. I use CI/CD pipelines, PostgreSQL databases, Redis for caching, and Nginx. I also have some experience with React and JavaScript.",
+        "jd_text": "We are looking for a backend engineer proficient in Python. You should have experience with Django or Flask, REST APIs, and GraphQL. Knowledge of cloud deployment on AWS, Kubernetes, and containerization using Docker is required. Must be familiar with PostgreSQL, Redis, Nginx, and CI/CD pipelines.",
+        "expected_matches": [
+            "python", "django", "flask", "rest apis", "graphql", "docker", "kubernetes", "aws", "postgresql", "redis", "nginx", "ci/cd pipelines"
+        ]
+    },
+    {
+        "id": "case_2_data_scientist",
+        "resume_text": "Data Scientist skilled in Machine Learning, Deep Learning, Pandas, Scikit-learn, TensorFlow, PyTorch, and Python. I have built predictive models, NLP pipelines, and visualised data using Matplotlib, Seaborn, and Tableau. Experience with SQL databases and BigQuery.",
+        "jd_text": "Data Scientist wanted. Must know Machine Learning, Deep Learning, NLP, Python, and SQL. Experience with TensorFlow, PyTorch, Scikit-learn, and Pandas is required. Bonus points for Tableau, BigQuery, Matplotlib, and Seaborn.",
+        "expected_matches": [
+            "machine learning", "deep learning", "nlp", "pandas", "scikit-learn", "tensorflow", "pytorch", "python", "matplotlib", "seaborn", "tableau", "sql", "bigquery"
+        ]
+    },
+    {
+        "id": "case_3_frontend_react",
+        "resume_text": "Frontend Web Developer. I build responsive SPAs using React.js, Next.js, Redux, HTML5, CSS3, and Tailwind CSS. I use Git for version control, Jest and Cypress for testing, Webpack for bundling, and TypeScript.",
+        "jd_text": "Seeking a frontend developer. Must have strong skills in React, Next.js, JavaScript, HTML, CSS, and Tailwind CSS. Knowledge of version control (Git), Redux, Webpack, Jest, and Cypress is essential. TypeScript is a plus.",
+        "expected_matches": [
+            "react", "next.js", "redux", "html", "css", "tailwind css", "git", "jest", "cypress", "webpack", "javascript", "typescript"
+        ]
+    },
+    {
+        "id": "case_4_devops",
+        "resume_text": "DevOps Engineer with a focus on CI/CD pipelines. I use Jenkins, GitLab CI, GitHub Actions, and Terraform for infrastructure as code. I manage Linux servers, write bash scripts, and use Ansible for configuration management. Experience with AWS, Azure, Prometheus, and Grafana.",
+        "jd_text": "DevOps role available. We need someone who can manage CI/CD pipelines (Jenkins, GitLab CI, GitHub Actions), use Terraform and Ansible, and administer Linux environments. Experience with Prometheus, Grafana, and cloud platforms like AWS or Azure is mandatory.",
+        "expected_matches": [
+            "ci/cd", "jenkins", "gitlab ci", "github actions", "terraform", "linux", "ansible", "prometheus", "grafana", "aws", "azure", "devops"
+        ]
+    },
+    {
+        "id": "case_5_fullstack_missing",
+        "resume_text": "I am a junior full-stack developer who knows Java, Spring Boot, MySQL, HTML, CSS, JavaScript, and basic React. I use Git for version control.",
+        "jd_text": "Full stack developer needed. Required: Java, Spring Boot, React, Node.js, MongoDB, TypeScript, GraphQL, Docker, Kubernetes, AWS.",
+        "expected_matches": [
+            "java", "spring boot", "react"
+        ]
+    }
+]
